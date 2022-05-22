@@ -1,0 +1,30 @@
+lockfileVersion: 5.4
+
+importers:
+
+  packages/cli:
+    specifiers:
+      chalk: ^5.0.1
+      commander: ^9.2.0
+      figlet: ^1.5.2
+    dependencies:
+      chalk: 5.0.1
+      commander: 9.2.0
+      figlet: 1.5.2
+
+packages:
+
+  /chalk/5.0.1:
+    resolution: {integrity: sha512-Fo07WOYGqMfCWHOzSXOt2CxDbC6skS/jO9ynEcmpANMoPrD+W1r1K6Vx7iNm+AQmETU1Xr2t+n8nzkV9t6xh3w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+    dev: false
+
+  /commander/9.2.0:
+    resolution: {integrity: sha512-e2i4wANQiSXgnrBlIatyHtP1odfUp0BbV5Y5nEGbxtIrStkEOAAzCUirvLBNXHLr7kwLvJl6V+4V3XV9x7Wd9w==}
+    engines: {node: ^12.20.0 || >=14}
+    dev: false
+
+  /figlet/1.5.2:
+    resolution: {integrity: sha512-WOn21V8AhyE1QqVfPIVxe3tupJacq1xGkPTB4iagT6o+P2cAgEOOwIxMftr4+ZCTI6d551ij9j61DFr0nsP2uQ==}
+    engines: {node: '>= 0.4.0'}
+    dev: false

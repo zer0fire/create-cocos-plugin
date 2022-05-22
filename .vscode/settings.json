@@ -1,0 +1,45 @@
+{
+  "ColorfulMonorepo.workspaces.collection": [
+    {
+      "path": "d:\\1.FrontEnd\\Project\\test\\create-cocos-plugin",
+      "packageName": "create-cocos-plugin",
+      "label": "create-cocos-plugin",
+      "foreground": "#ffffff",
+      "background": "#942122"
+    }
+  ],
+  "ColorfulMonorepo.drawer.init": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.gitignore": true,
+    "**/.gitattributes": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.editorconfig": true,
+    "**/.github": true,
+    "**/.yarn": true,
+    "**/.prettierrc": true,
+    "**/.eslintrc*": true,
+    "**/LICENSE": true,
+    "**/.eslintignore": true,
+    "**/node_modules": true,
+    "**/tsconfig.json": true,
+    "**/jsconfig.json": true,
+    "**/package.json": true,
+    "**/.vscode": true,
+    "**/.next": true,
+    "**/.gitmodules": true,
+    "**/.yarnrc*": true,
+    "**/.babelrc*": true,
+    "**/.npmrc": true,
+    "**/README.*": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/yarn.lock": true,
+    "**/pnpm-lock.yaml": true,
+    "**/package-lock.json": true
+  }
+}
