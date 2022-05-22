@@ -26,3 +26,5 @@
 
 
 mono repo 如何处理 .gitignore?
+
+mono repo 配置 https://icode.best/i/77424147745096
