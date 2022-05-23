@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "preinstall": "npx only-allow pnpm -y",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "npx only-allow pnpm"
+    "deploy": "pnpm run deploy --parallel ",
+    "build": "pnpm run build --parallel",
+    "avmd": "pnpm changeset add"
   },
   "keywords": [],
   "author": "",
