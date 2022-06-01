@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 try {
-    require()
+    require('../index')
 } catch (e) {
     console.error(e)
 }
