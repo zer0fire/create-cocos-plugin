@@ -69,7 +69,7 @@ main();
 
 module.exports = main
 // 暂时不需要： 通过 commander 定义一个 create-cocos-plugin 入口
-// TODO: 解决 cocos 不兼容 vite 项目的问题
+// 通过替换 webpack 项目解决 -- 解决 cocos 不兼容 vite 项目的问题
 
 
 // 新增 assemble-helper 功能
