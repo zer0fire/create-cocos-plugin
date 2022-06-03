@@ -1,5 +1,6 @@
 // const { default: chalk } = require('chalk');
-const { program } = require('commander')
+const { Command } = require('commander')
+const program = new Command()
 const figlet = require('figlet')
 const assembleHelperSetting = require('./src/createAssembleHelper');
 const chalk = import('chalk')
@@ -11,6 +12,7 @@ const process = require('process');
 // TODO: 行为入口
 // TODO: assemble-helper
 // TODO: 单纯配置 assemble-helper
+// TODO: webpack 打包
 
 
 async function ask() {
@@ -55,15 +57,20 @@ async function main() {
 
 }
 main();
-
-module.exports = main
-
 // program
-    // .name('create-cocos-plugin')
+//     .name('create-cocos-plugin')
+//     .description('创建 cocos 插件模板')
 //     .version(require('./package.json').version)
 //     .parse(process.argv)
-// program.action
-// program.command
+//     .argument('<projectName>', '需要一个项目名称')
+//     .action((projectName) => {
+//         projectName && main(projectName)
+//     })
+
+module.exports = main
+// 暂时不需要： 通过 commander 定义一个 create-cocos-plugin 入口
+// 通过替换 webpack 项目解决 -- 解决 cocos 不兼容 vite 项目的问题
+
 
 // 新增 assemble-helper 功能
 // 项目名（项目路径）
