@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "pnpm run deploy --parallel ",
     "build": "pnpm run build --parallel",
-    "avmd": "pnpm changeset add"
+    "avmd": "pnpm changeset add",
+    "lint": "eslint --fix packages"
   },
   "keywords": [],
   "author": "",

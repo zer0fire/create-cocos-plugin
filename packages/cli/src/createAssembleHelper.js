@@ -40,6 +40,9 @@ const assembleHelperPath = path.join(cocosPath, '/packages/assemble-helper')
 const mainJsonPath = path.join(assembleHelperPath, '/package.json')
 const srcDirPath = path.join(assembleHelperPath, '/src')
 const panelPath = path.join(srcDirPath, '/panels')
+const template = `git@github.com/zer0fire/cocos-plugin-tempalte`
+
+
 
 function setPluginJSON({ pluginName, projectName }) {
   const mainJson = JSON.parse(fs.readFileSync(mainJsonPath).toString())
@@ -59,8 +62,9 @@ function setPluginJSON({ pluginName, projectName }) {
   fs.writeFileSync(mainJsonPath, JSON.stringify(mainJson, ' ', 4))
 }
 
-function overWriteCopyByPath(path, targetPath) {
-  const dir = path.join(process.cwd(), '/', path)
+function overWriteCopyByFolder(folder, targetPath) {
+  // 复制命令运行的目录下 path 文件夹到 targetPath
+  const dir = path.join(process.cwd(), '/', folder)
   try {
     fs.copySync(dir, targetPath, {
       overwrite: true
@@ -74,27 +78,30 @@ function overWriteCopyByPath(path, targetPath) {
 
 async function main({ pluginName, projectName, buildPath }) {
   setPluginJSON({ pluginName, projectName })
+  const projectPath = path.join(panelPath, '/', projectName)
+  const packageJSONPath = path.join(projectPath, 'package.json')
+  const appTsxPath = path.join(projectPath, 'src/App.tsx')
 
   await execPromise('mkdir ' + projectName, { cwd: panelPath })
-  const projectPath = path.join(panelPath, '/', projectName)
+
   // pull 代码
   // build 或 move build
   if (!buildPath) {
-    
+    pluginName = pluginName ? pluginName : 'cocos-plugin-tempalte'
     // git clone template
-    await execPromise('git clone template')
+    await execPromise(`git clone ${template}`)
+    await execPromise(`mv cocos-plugin-tempalte ${projectName}`)
     // 修改名称 @pluginName 和 @projectName 修改成 pluginName 和projectName
-    const packageJSON = fs.readFileSync(path.join(projectName, 'package.json')).toString().replace('@projectName', projectName)
-    const appTsx = fs.readFileSync(path.join(projectName, 'src/App.tsx')).toString().replace('@pluginName', pluginName)
-    fs.writeFileSync(packageJSON, path.join(projectName, 'package.json'))
-    fs.writeFileSync(appTsx, path.join(projectName, 'src/App.tsx'))
+    const packageJSONStr = fs.readFileSync(packageJSONPath).toString().replace('@projectName', projectName)
+    const appTsxStr = fs.readFileSync(appTsxPath).toString().replace('@pluginName', pluginName)
+    fs.writeFileSync(packageJSONStr, packageJSONPath)
+    fs.writeFileSync(appTsxStr, appTsxPath)
     // 安装 node_modules
-    await execPromise('npm i')
+    await execPromise('npm i', { cwd: projectPath })
     // build
-    await execPromise('npm run build')
-    // 移动
+    await execPromise('npm run build', { cwd: projectPath })
   }
-  overWriteCopyByPath(buildPath, projectPath)
+  overWriteCopyByFolder(buildPath, projectPath)
 }
 
 module.exports = main

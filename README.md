@@ -28,3 +28,8 @@
 mono repo 如何处理 .gitignore?
 
 mono repo 配置 https://icode.best/i/77424147745096
+
+
+Cocos3.x 扩展的路径
+Windows：%USERPROFILE%\.CocosCreator\extensions
+macOS：$HOME/.CocosCreator/extensions
