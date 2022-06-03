@@ -2,6 +2,8 @@ const fs = require('fs-extra');
 const path = require('path');
 const process = require('process');
 const { exec } = require('child_process');
+const { promisify } = require('util');
+const execPromise = promisify(exec)
 // TODO: 获取 cocos creator 的插件路径，
 // 获取 assemble-helper 里的 main.json，改 JSON
 // 创建新文件夹（参数）
@@ -57,25 +59,42 @@ function setPluginJSON({ pluginName, projectName }) {
   fs.writeFileSync(mainJsonPath, JSON.stringify(mainJson, ' ', 4))
 }
 
-function main({ pluginName, projectName, buildPath }) {
+function overWriteCopyByPath(path, targetPath) {
+  const dir = path.join(process.cwd(), '/', path)
+  try {
+    fs.copySync(dir, targetPath, {
+      overwrite: true
+    });
+  } catch (e) {
+    console.error(e)
+  } finally {
+    process.exit(0);
+  }
+}
+
+async function main({ pluginName, projectName, buildPath }) {
   setPluginJSON({ pluginName, projectName })
 
-  exec('mkdir ' + projectName, { cwd: panelPath })
+  await execPromise('mkdir ' + projectName, { cwd: panelPath })
   const projectPath = path.join(panelPath, '/', projectName)
   // pull 代码
   // build 或 move build
-  if (buildPath) {
-    const buildDir = path.join(process.cwd(), '/', buildPath)
-    try {
-      fs.copySync(buildDir, projectPath, {
-        overwrite: true
-      });
-    } catch (e) {
-      console.error(e)
-    } finally {
-      process.exit(0);
-    }
+  if (!buildPath) {
+    
+    // git clone template
+    await execPromise('git clone template')
+    // 修改名称 @pluginName 和 @projectName 修改成 pluginName 和projectName
+    const packageJSON = fs.readFileSync(path.join(projectName, 'package.json')).toString().replace('@projectName', projectName)
+    const appTsx = fs.readFileSync(path.join(projectName, 'src/App.tsx')).toString().replace('@pluginName', pluginName)
+    fs.writeFileSync(packageJSON, path.join(projectName, 'package.json'))
+    fs.writeFileSync(appTsx, path.join(projectName, 'src/App.tsx'))
+    // 安装 node_modules
+    await execPromise('npm i')
+    // build
+    await execPromise('npm run build')
+    // 移动
   }
+  overWriteCopyByPath(buildPath, projectPath)
 }
 
 module.exports = main
