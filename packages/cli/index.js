@@ -10,10 +10,10 @@ const inquirer = require('inquirer');
 const process = require('process');
 
 // TODO: 行为入口
-// TODO: assemble-helper
-// TODO: 单纯配置 assemble-helper
 // TODO: webpack 打包
-
+// TODO: 单独的 plugin ，包含 main.js 等
+// TODO: cocos3 的插件 ，包含 main.js 等
+// TODO: template 需要包含 react 下的 cocos 组件库
 
 async function ask() {
     const questions = [
@@ -23,7 +23,9 @@ async function ask() {
             message: '选择新增插件类型',
             choices: [
                 // 新增 assemble-helper 功能
-                { name: '新增 assemble-helper 功能', value: 'assembleHelperSetting' }
+                { name: '新增 assemble-helper 功能', value: 'assembleHelperSetting' },
+                { name: '新增独立插件', value: 'addNewPlugin' },
+                { name: '新增 cocos3 独立插件', value: 'addCocos3Extension' },
             ]
         }
     ]
@@ -46,6 +48,10 @@ async function ask() {
             { type: 'input', name: 'buildPath', message: '打包文件（可选）:' }
         ])
         assembleHelperSetting({ projectName, pluginName, buildPath })
+    } else if (answer.name === 'addNewPlugin') {
+        // TODO: 新增插件
+    } else if (answer.name === 'addCocos3Extension') {
+        // TODO: 新增 coco3 插件
     }
 }
 

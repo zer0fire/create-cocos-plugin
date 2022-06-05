@@ -40,7 +40,7 @@ const assembleHelperPath = path.join(cocosPath, '/packages/assemble-helper')
 const mainJsonPath = path.join(assembleHelperPath, '/package.json')
 const srcDirPath = path.join(assembleHelperPath, '/src')
 const panelPath = path.join(srcDirPath, '/panels')
-const template = `git@github.com/zer0fire/cocos-plugin-tempalte`
+const template = `git@github.com:zer0fire/cocos-plugin-template.git`
 
 
 
