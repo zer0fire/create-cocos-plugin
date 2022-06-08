@@ -30,28 +30,37 @@ async function ask() {
         }
     ]
     const answer = await inquirer.prompt(questions)
-    console.log(answer)
-    if (answer.name === 'assembleHelperSetting') {
-        // 项目名（项目路径）
-        const { projectName } = await inquirer.prompt([
-            { type: 'input', name: 'projectName', message: '项目名（项目路径）:' }
-        ])
-        if (!projectName) {
-            console.error('必须要有一个默认项目名')
-            process.exit(0)
+    // console.log(answer)
+    try {
+        if (answer.name === 'assembleHelperSetting') {
+            // 项目名（项目路径）
+            const { projectName } = await inquirer.prompt([
+                { type: 'input', name: 'projectName', message: '项目名（项目路径）:' }
+            ])
+            if (!projectName) {
+                console.error('必须要有一个默认项目名')
+                process.exit(0)
+            }
+            // 插件名（菜单名）
+            const { pluginName } = await inquirer.prompt([
+                { type: 'input', name: 'pluginName', message: '插件名（菜单名，默认为项目名）:' }
+            ])
+            const { buildDir } = await inquirer.prompt([
+                { type: 'input', name: 'buildDir', message: '打包文件（可选）:' }
+            ])
+            await assembleHelperSetting({ projectName, pluginName, buildDir })
+        } else if (answer.name === 'addNewPlugin') {
+            // TODO: 新增插件
+        } else if (answer.name === 'addCocos3Extension') {
+            // TODO: 新增 coco3 插件
         }
-        // 插件名（菜单名）
-        const { pluginName } = await inquirer.prompt([
-            { type: 'input', name: 'pluginName', message: '插件名（菜单名，默认为项目名）:' }
-        ])
-        const { buildPath } = await inquirer.prompt([
-            { type: 'input', name: 'buildPath', message: '打包文件（可选）:' }
-        ])
-        assembleHelperSetting({ projectName, pluginName, buildPath })
-    } else if (answer.name === 'addNewPlugin') {
-        // TODO: 新增插件
-    } else if (answer.name === 'addCocos3Extension') {
-        // TODO: 新增 coco3 插件
+    } catch(e) {
+        console.error(e)
+        if (e.message.includes('Error: Command failed: mkdir')) {
+            throw new Error('创建文件夹失败')
+        }
+    } finally {
+        await execPromise('rm -rf cocos-plugin-template')
     }
 }
 

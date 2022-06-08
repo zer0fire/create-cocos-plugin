@@ -1,3 +1,5 @@
+
+
 const fs = require('fs-extra');
 const path = require('path');
 const process = require('process');
@@ -13,10 +15,12 @@ const {
 } = require('./const')
 
 const execPromise = promisify(exec)
-
+// TODO: 引入模板
+// TODO: 改配置
+// TODO: 路径设置
+// TODO: main.js 等详细设置
 // TODO: Progress 进度条
 // TODO: exec 报错处理和用户显示
-// TODO: 项目可配置
 
 function setPluginJSON({ pluginName, projectName }) {
   const mainJson = JSON.parse(fs.readFileSync(mainJsonPath).toString())
@@ -74,7 +78,7 @@ async function main({ pluginName, projectName, buildDir }) {
     // git clone template
     await execPromise(`git clone ${template}`)
     console.log('clone end')
-    await execPromise(`git checkout new-feature`, { cwd: templatePath })
+    await execPromise(`git checkout new-plugin`, { cwd: templatePath })
     await execPromise('git remote rm origin', { cwd: templatePath })
     await execPromise(`rm -rf .git`, { cwd: templatePath })
     await execPromise(`rm -rf ${projectName}`)
