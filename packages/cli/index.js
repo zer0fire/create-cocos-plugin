@@ -2,8 +2,8 @@
 // const program = new Command();
 // import readLine from 'readline';
 // const rl = readLine.createInterface(process.stdin, process.stdout)
-// import figlet from 'figlet';
-// import chalk from 'chalk';
+import figlet from 'figlet';
+import chalk from 'chalk';
 import inquirer from 'inquirer';
 import process from 'process';
 import { promisify } from 'util';
@@ -69,11 +69,16 @@ async function ask() {
 async function main() {
     // const argv = process.argv
     // const [ runTimePath, filePath ] = argv
+    const edition = /v(.*?)\./.exec(process.version)[1]
+    if (Number(edition) < 16) {
+        console.log(chalk.bgRed('请升级至 node 16 !'))
+        process.exit(1)
+    }
+    
     await ask()
     process.exit(0)
-
 }
-// await main();
+await main();
 // program
 //     .name('create-cocos-plugin')
 //     .description('创建 cocos 插件模板')

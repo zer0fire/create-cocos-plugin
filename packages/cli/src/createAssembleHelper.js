@@ -1,9 +1,11 @@
 import fs from 'fs-extra';
-import path from 'path';
-import process from 'process';
+import path from 'node:path';
+import process from 'node:process';
 
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { exec, spawn } from 'node:child_process';
+import { promisify } from 'node:util';
+import figlet from 'figlet';
+import chalk from 'chalk';
 
 import { 
   templateObj,
@@ -13,6 +15,8 @@ import {
 } from './const.js';
 
 const execPromise = promisify(exec)
+const spawnPromise = promisify(spawn)
+const figletText = promisify(figlet.text);
 
 // TODO: Progress 进度条
 // TODO: exec 报错处理和用户显示
@@ -52,6 +56,11 @@ function overWriteCopyByFolder(folder, targetPath) {
 }
 
 async function main({ pluginName, projectName, buildDir }) {
+  const startLog = await figletText('start add feature')
+  console.log(chalk.green(startLog))
+  console.log(chalk.green('开始增加应用功能...')) 
+
+
   setPluginJSON({ pluginName, projectName })
   const projectPath = path.join(process.cwd(), projectName)
   const targetPath = path.join(panelPath, projectName)
@@ -74,7 +83,8 @@ async function main({ pluginName, projectName, buildDir }) {
     // git clone template
     // TODO: progress
     
-    await execPromise(`git clone ${template}`)
+    const cloneProcess = await spawnPromise(`git`, [`clone ${template}`], {})
+    cloneProcess.stdout.pipe(process.stdout)
     console.log('clone end')
     await execPromise(`git checkout new-feature`, { cwd: templatePath })
     await execPromise('git remote rm origin', { cwd: templatePath })
@@ -89,8 +99,8 @@ async function main({ pluginName, projectName, buildDir }) {
     // 安装 node_modules
     console.log('npm installing...')
     // TODO: progress
-    const { stdout } = await execPromise('npm install', { cwd: projectPath })
-    console.log(stdout)
+    const installProcess = await spawnPromise('npm install', [], { cwd: projectPath })
+    installProcess.stdout.pipe(process.stdout)
     // build
     console.log('npm building...')
     await execPromise('npm run build', { cwd: projectPath })
