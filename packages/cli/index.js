@@ -1,14 +1,16 @@
-// const { default: chalk } = require('chalk');
-const { Command } = require('commander')
-const program = new Command()
-const figlet = require('figlet')
-const assembleHelperSetting = require('./src/createAssembleHelper');
-const chalk = import('chalk')
-// const readLine = require('readline')
+// import { Command } from 'commander';
+// const program = new Command();
+// import readLine from 'readline';
 // const rl = readLine.createInterface(process.stdin, process.stdout)
-const inquirer = require('inquirer');
-const process = require('process');
+// import figlet from 'figlet';
+// import chalk from 'chalk';
+import inquirer from 'inquirer';
+import process from 'process';
+import { promisify } from 'util';
+import { exec } from 'child_process';
+import assembleHelperSetting from './src/createAssembleHelper.js';
 
+const execPromise = promisify(exec)
 // TODO: 行为入口
 // TODO: webpack 打包
 // TODO: 单独的 plugin ，包含 main.js 等
@@ -65,13 +67,13 @@ async function ask() {
 }
 
 async function main() {
-    const argv = process.argv
-    const [ runTimePath, filePath ] = argv
+    // const argv = process.argv
+    // const [ runTimePath, filePath ] = argv
     await ask()
     process.exit(0)
 
 }
-main();
+// await main();
 // program
 //     .name('create-cocos-plugin')
 //     .description('创建 cocos 插件模板')
@@ -82,7 +84,7 @@ main();
 //         projectName && main(projectName)
 //     })
 
-module.exports = main
+export default main
 // 暂时不需要： 通过 commander 定义一个 create-cocos-plugin 入口
 // 通过替换 webpack 项目解决 -- 解决 cocos 不兼容 vite 项目的问题
 

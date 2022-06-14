@@ -1,16 +1,16 @@
-const fs = require('fs-extra');
-const path = require('path');
-const process = require('process');
+import fs from 'fs-extra';
+import path from 'path';
+import process from 'process';
 
-const { exec } = require('child_process');
-const { promisify } = require('util');
+import { exec } from 'child_process';
+import { promisify } from 'util';
 
-const { 
+import { 
   templateObj,
   mainJsonPath,
   panelPath,
   template,
-} = require('./const')
+} from './const.js';
 
 const execPromise = promisify(exec)
 
@@ -27,7 +27,7 @@ function setPluginJSON({ pluginName, projectName }) {
     : mainJson['panel-' + projectName]['title'] = projectName
   mainJson['panel-' + projectName]['index'] =  "src/panels/" + projectName + "/index.html"
   const openStr = '打开 ' + (pluginName ? pluginName : projectName)
-  mainJson['main-menu']['装配工厂\/' + openStr] = {
+  mainJson['main-menu']['装配工厂/' + openStr] = {
     "message": "assemble-helper:open",
     "params": [projectName]
   }
@@ -72,6 +72,8 @@ async function main({ pluginName, projectName, buildDir }) {
     pluginName = pluginName ? pluginName : 'cocos-plugin-template'
     console.log('cloning...')
     // git clone template
+    // TODO: progress
+    
     await execPromise(`git clone ${template}`)
     console.log('clone end')
     await execPromise(`git checkout new-feature`, { cwd: templatePath })
@@ -86,15 +88,17 @@ async function main({ pluginName, projectName, buildDir }) {
     fs.writeFileSync(appTsxPath, appTsxStr)
     // 安装 node_modules
     console.log('npm installing...')
+    // TODO: progress
     const { stdout } = await execPromise('npm install', { cwd: projectPath })
     console.log(stdout)
     // build
     console.log('npm building...')
     await execPromise('npm run build', { cwd: projectPath })
+    // TODO: progress
     await execPromise('git init', { cwd: projectPath })
     console.log('complete!')
   }
   overWriteCopyByFolder(buildDir, targetPath)
 }
 
-module.exports = main
+export default main

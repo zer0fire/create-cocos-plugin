@@ -1,7 +1,7 @@
-const path = require('path');
-const { getCocosPath } = require('./util');
+import path from 'path';
+import { getCocosPath } from './utils.js';
 
-const templateObj = {
+export const templateObj = {
     "type": "dockable",
     "title": "panel-defaultName",
     "width": 500,
@@ -11,20 +11,9 @@ const templateObj = {
     "packageName": "assemble-helper"
 }
 
-const cocosPath = getCocosPath()
-const assembleHelperPath = path.join(cocosPath, '/packages/assemble-helper')
-const mainJsonPath = path.join(assembleHelperPath, '/package.json')
-const srcDirPath = path.join(assembleHelperPath, '/src')
-const panelPath = path.join(srcDirPath, '/panels')
-const template = `git@github.com:zer0fire/cocos-plugin-template.git`
-  
-
-module.exports = {
-    templateObj,
-    cocosPath,
-    assembleHelperPath,
-    mainJsonPath,
-    srcDirPath,
-    panelPath,
-    template,
-}
+export const cocosPath = getCocosPath()
+export const assembleHelperPath = path.join(cocosPath, '/packages/assemble-helper')
+export const mainJsonPath = path.join(assembleHelperPath, '/package.json')
+export const srcDirPath = path.join(assembleHelperPath, '/src')
+export const panelPath = path.join(srcDirPath, '/panels')
+export const template = `git@github.com:zer0fire/cocos-plugin-template.git`

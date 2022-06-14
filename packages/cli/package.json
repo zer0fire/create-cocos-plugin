@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "create a cocos-plugin by react",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,7 +26,8 @@
     "commander": "^9.2.0",
     "figlet": "^1.5.2",
     "fs-extra": "^10.1.0",
-    "inquirer": "^8.2.4"
+    "inquirer": "^8.2.4",
+    "progress": "^2.0.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.26.0",

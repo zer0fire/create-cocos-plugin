@@ -1,18 +1,16 @@
+import fs from 'fs-extra';
+import path from 'path';
+import process from 'process';
 
+import { exec } from 'child_process';
+import { promisify } from 'util';
 
-const fs = require('fs-extra');
-const path = require('path');
-const process = require('process');
-
-const { exec } = require('child_process');
-const { promisify } = require('util');
-
-const { 
+import { 
   templateObj,
   mainJsonPath,
   panelPath,
   template,
-} = require('./const')
+} from './const.js';
 
 const execPromise = promisify(exec)
 // TODO: 引入模板
@@ -31,7 +29,7 @@ function setPluginJSON({ pluginName, projectName }) {
     : mainJson['panel-' + projectName]['title'] = projectName
   mainJson['panel-' + projectName]['index'] =  "src/panels/" + projectName + "/index.html"
   const openStr = '打开 ' + (pluginName ? pluginName : projectName)
-  mainJson['main-menu']['装配工厂\/' + openStr] = {
+  mainJson['main-menu']['装配工厂/' + openStr] = {
     "message": "assemble-helper:open",
     "params": [projectName]
   }
@@ -101,4 +99,4 @@ async function main({ pluginName, projectName, buildDir }) {
   overWriteCopyByFolder(buildDir, targetPath)
 }
 
-module.exports = main
+export default main

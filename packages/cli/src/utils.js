@@ -1,10 +1,22 @@
-const path = require('path')
+import path from 'path';
+import ProgressBar from 'progress';
+
+
+
+export function showBar() {
+    const bar1 = new ProgressBar(':bar', { total: 20 });
+    bar1.tick()
+    if (bar1.complete) {
+      console.log('\ncomplete\n');
+    }
+
+}
 
 /**
  * 获取 Cocos2.x 安装路径
  * @returns [string] path
  */
-function getCocosPath() {
+export function getCocosPath() {
     const HOME = process.platform === 'darwin'
         ? process.env.HOME
         : process.env.USERPROFILE
@@ -17,8 +29,4 @@ function getCocosPath() {
         }
     }
     return path.join(HOME, '.CocosCreator')
-}
-
-module.exports = {
-    getCocosPath
 }

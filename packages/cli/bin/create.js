@@ -1,6 +1,7 @@
 #!/usr/bin/env node
+import mainEntry from '../index.js';
 try {
-    require('../index')
+    mainEntry()
 } catch (e) {
     console.error(e)
 }
