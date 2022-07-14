@@ -83,8 +83,9 @@ async function main({ pluginName, projectName, buildDir }) {
     // git clone template
     // TODO: progress
     
-    const cloneProcess = await spawnPromise(`git`, [`clone ${template}`], {})
-    cloneProcess.stdout.pipe(process.stdout)
+    const cloneProcess = await execPromise(`git clone ${template}`)
+    console.log(cloneProcess.stdout)
+    // cloneProcess.stdout.pipe(process.stdout)
     console.log('clone end')
     await execPromise(`git checkout new-feature`, { cwd: templatePath })
     await execPromise('git remote rm origin', { cwd: templatePath })
@@ -99,8 +100,8 @@ async function main({ pluginName, projectName, buildDir }) {
     // 安装 node_modules
     console.log('npm installing...')
     // TODO: progress
-    const installProcess = await spawnPromise('npm install', [], { cwd: projectPath })
-    installProcess.stdout.pipe(process.stdout)
+    const installProcess = await execPromise('npm install', { cwd: projectPath })
+    console.log(installProcess.stdout)
     // build
     console.log('npm building...')
     await execPromise('npm run build', { cwd: projectPath })
